@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
+//         Checking if Input equal []
+        if (root == nullptr)
+            return res;
+//         Node and bool which equals true when we've visited left Node
+        stack<pair<TreeNode*, bool> > st;
+        st.push({root, false});
+//         similar to BFS algorithm
+        while(!st.empty()) {
+            pair<TreeNode*, bool> top = st.top();
+//             If we  can go left, then we go left
+            if (!top.second && top.first->left != nullptr) {
+//                 pointing that we visited left Node
+                st.top().second = true;
+//                 Adding Node to stack and starting everything again from that Node
+                st.push({top.first->left, false});
+                continue;
+            }
+//             If we here, it means that we were at left Node or can't go there
+//             so we need to write root to result (check description [left,root,right])
+            res.push_back(top.first->val);
+//             If we gone left already, we don't need this Node, so we delete it
+            st.pop();
+//             Checks if we can visit right Node, because we were il left Node and in root
+            if (top.first->right != nullptr) {
+                st.push({top.first->right, false});
+            }
+        }
+        
+        
+        return res;
+    }
+};
