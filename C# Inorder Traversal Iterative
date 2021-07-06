@@ -1,0 +1,24 @@
+
+public class Solution {
+    public IList<int> InorderTraversal(TreeNode root) {
+        var stack = new Stack<object>();
+        var ret = new List<int>();
+        stack.Push(root);
+        
+        while(stack.Count>0){
+            var x = stack.Pop();
+            if(x == null)
+                continue;
+            if(x is TreeNode){
+                var node = x as TreeNode;
+                stack.Push(node.right);
+                stack.Push(node.val);
+                stack.Push(node.left);
+            }
+            else{
+                ret.Add((int)x);
+            }
+        }
+        return ret;
+    }
+}
